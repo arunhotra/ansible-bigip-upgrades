@@ -1,0 +1,29 @@
+---
+
+- name: Upgrade a BIG-IP
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: username
+      prompt: "What is your username?"
+      private: no
+
+    - name: password
+      prompt: "What is your password?"
+      private: yes
+
+  roles:
+    - init
+    - pre-upgrade
+    - upgrade
+    - post-upgrade
+
+
+    - { role: "init", when: (upgrade_success == true | bool) } 
+    - { role: "pre-upgrade", when: (upgrade_success == true | bool) } 
+    - { role: "upgrade", when: (upgrade_success == true | bool) } 
+    - { role: "post-upgrade", when: (upgrade_success == true | bool) } 
+
+

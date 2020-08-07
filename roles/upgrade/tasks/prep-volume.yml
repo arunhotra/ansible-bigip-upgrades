@@ -1,0 +1,32 @@
+- name: Initialize a variable for volumes
+  vars:
+  set_fact:
+    volumes: []
+  tags:
+    - upgrade
+
+- name: Collect BIG-IP facts to determine the active and available software-volumes
+  bigip_device_facts:
+    gather_subset:
+      - software-volumes
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  register: ltm
+  delegate_to: localhost
+  tags:
+    - upgrade
+
+- name: Find volume to install not active
+  set_fact:
+    volumes: "{{ volumes|default([])+ [ item.name ] }}"
+  when: 'item.active == "no"' 
+  loop: "{{ ltm.software_volumes }}"
+  tags:
+    - upgrade
+
+
+ 
+

@@ -1,0 +1,31 @@
+---
+
+
+  - include_tasks: collect-pool-status-standby.yml
+    when:
+      standby_host|bool == true
+    tags:
+      - post-upgrade
+
+  - include_tasks: collect-pool-status-active.yml
+    when:
+      standby_host|bool == false
+    tags:
+      - post-upgrade
+
+  - include_tasks: compare-status.yml
+    tags:
+      - post-upgrade
+
+
+
+  - include_tasks: set-varaibles-depending-on-status.yml
+    tags:
+      - post-upgrade
+
+
+  - include_tasks: failover-active-guests.yml
+    when: not standby_host|bool and upgrade_success|bool
+    tags:
+      - post-upgrade
+

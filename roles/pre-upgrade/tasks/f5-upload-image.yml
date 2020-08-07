@@ -1,0 +1,11 @@
+- name: Upload absolute image to the BIG-IP
+  bigip_software_image:
+    image: "{{ ISO_PATH }}/{{ ISO_IMAGE }}"
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - pre-upgrade

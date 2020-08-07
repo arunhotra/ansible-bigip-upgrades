@@ -1,0 +1,25 @@
+
+- import_tasks: initialize-variables.yml
+  tags:
+    - always
+
+- include_tasks: initialize-success-variable.yml
+  when: upgrade_success is not defined
+  tags:
+    - always
+
+
+- import_tasks: populate-hosts.yml
+  tags:
+    - always
+
+- import_tasks: populate-active-standby-pairs.yml
+  tags:
+    - always
+
+- include_tasks: assign-standby.yml
+  tags:
+   - always
+
+
+

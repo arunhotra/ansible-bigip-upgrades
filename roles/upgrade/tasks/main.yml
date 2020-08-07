@@ -1,0 +1,23 @@
+--- 
+
+  - include_tasks: prep-volume.yml
+    when: 
+      standby_host|bool == true
+    tags:
+      - upgrade
+
+  - include_tasks: delete-volume.yml
+    when: 
+      standby_host|bool == true 
+      and 
+      ( volumes | length > 0 )
+    tags:
+      - upgrade
+
+  - include_tasks: upgrade-standby.yml
+    when:
+      standby_host|bool == true
+    tags:
+      - upgrade
+
+

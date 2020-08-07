@@ -1,0 +1,6 @@
+- name: License bigip using the license module
+  bigip_device_license:
+    license_key: "SERHU-LIMRN-ESMLV-IIYRE-QDOVBJM"
+    accept_eula: yes
+    provider: "{{ provider }}"
+  delegate_to: localhost

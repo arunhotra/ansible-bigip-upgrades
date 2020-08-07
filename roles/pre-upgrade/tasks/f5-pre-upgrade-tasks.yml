@@ -1,0 +1,42 @@
+
+- name: Fetch a qkview from the remote device
+  bigip_qkview:
+    dest: "{{ BACKUPS }}/{{ ITSM }}-{{ inventory_hostname }}.qkview"
+    exclude_core: yes
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - pre-upgrade
+
+- name: Download a new UCS
+  bigip_ucs_fetch:
+    src: "{{ ITSM }}_{{ inventory_hostname }}.ucs"
+    dest: "{{ BACKUPS }}/{{ ITSM }}-{{ inventory_hostname }}.ucs"
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - pre-upgrade
+  
+- name: Disable snmp traps
+  bigip_snmp:
+    agent_authentication_traps: disabled
+    agent_status_traps: disabled
+    device_warning_traps: disabled
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  when: standby_host|bool == true
+  delegate_to: localhost
+  tags:
+    - pre-upgrade
+

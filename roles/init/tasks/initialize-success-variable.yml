@@ -1,0 +1,7 @@
+- name: Initializing the upgrade_success variable
+  vars:
+  set_fact:
+    upgrade_success: False
+  tags:
+    - always
+

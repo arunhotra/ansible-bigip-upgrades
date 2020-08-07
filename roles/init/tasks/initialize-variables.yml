@@ -1,0 +1,39 @@
+- name: Initializing the custom variables used in branching  
+  vars:
+  set_fact:
+    # proceed: False
+    # active: False
+    # standby: False
+    fistt_device: none
+    second_device: none
+    volume: none
+    # datasync_global_dg: False
+    ltm: none
+    all_hosts: []
+    bigips_standby_status: {}
+   # vcmp_guests: []
+   # vcmp_guests_names: []
+   # hosts: []
+   # vcmp_guests_standby_status: {}
+    active_standby_ha_pairs: {}
+    standby_host: False
+  tags:
+    - always
+
+- name: Make Directory for all UPGRADES related files
+  shell:  test -d "{{ UPGRADES }}" || mkdir "{{ UPGRADES }}" 
+  tags:
+    - always
+
+
+
+- name: Make Directory on local system to store .ucs and .qkview files
+  shell:  test -d "{{ BACKUPS }}" || mkdir "{{ BACKUPS }}" 
+  tags:
+    - always
+
+- name: Make Directory on local system to store temporary files
+  shell:  test -d "{{ TMP }}" || mkdir "{{ TMP }}" 
+  tags:
+    - always
+

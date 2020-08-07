@@ -1,0 +1,11 @@
+version: "3"
+services:
+  upgrade-bigip:
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+    volumes:
+      - .:/ansible
+      - ./UPGRADES:/ansible/UPGRADES
+    

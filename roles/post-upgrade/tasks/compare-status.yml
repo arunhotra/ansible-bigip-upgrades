@@ -1,0 +1,13 @@
+- name: Copy output to file
+  copy:
+    content: "{{ active_standby_ha_pairs }}"
+    dest: "{{ TMP }}/active_standby_ha_pairs.json"
+  tags:
+    - post-upgrade
+
+- name: Run the python script to compare the active and standby statuses
+  shell: python3 compare.py 
+  args:
+    chdir: "{{ SCRIPTS }}"    
+  tags:
+    - post-upgrade

@@ -1,0 +1,12 @@
+- name: Failover Active guest "{{ inventory_hostname }}" to standby
+  bigip_command:
+    commands:
+      - run sys failover standby
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - post-upgrade

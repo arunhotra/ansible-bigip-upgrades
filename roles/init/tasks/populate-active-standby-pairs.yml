@@ -1,0 +1,35 @@
+- name: Collect BIG-IP facts to determine HA pairs
+  bigip_device_info:
+    gather_subset:
+      - devices
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  register: ha_pairs
+  delegate_to: localhost
+  tags:
+    - always
+
+- name: Printing out the First and second Device in the VCMP HA pair
+  vars:
+  set_fact:
+    first_device: "{{ ha_pairs.devices[0].hostname }}"
+    second_device: "{{ ha_pairs.devices[1].hostname }}"
+  tags:
+    - always
+
+
+- name: Populate the active standby pairing for comparison later
+  set_fact:
+    active_standby_ha_pairs: "{{ active_standby_ha_pairs|default({}) | combine({first_device:second_device}) }}"
+  loop: "{{ ha_pairs.devices }}"
+  tags:
+    - always
+
+- name: Debug the HA pairs 
+  debug:
+    msg: "{{ active_standby_ha_pairs }}"
+  tags:
+    - always

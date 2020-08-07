@@ -1,0 +1,48 @@
+
+# - name: Initializing the upgrade success variable
+#   set_fact:
+#     upgrade_success: false
+#   tags:
+#     - post-upgrade
+
+- name: Display the JSON file content
+  shell: cat compare_status.json
+  args:
+    chdir: "{{ TMP }}"
+  register: status
+  tags:
+    - post-upgrade
+
+- name: Save the Status Json data to a Variable as a Fact
+  set_fact:
+    status_json: "{{ status.stdout | from_json }}"
+  tags:
+    - post-upgrade
+
+
+- name: Set the success variable to true based on the upgrade status
+  set_fact:
+    upgrade_success: true
+  when: item.value | bool
+  with_dict: "{{ status_json }}"
+  tags:
+    - post-upgrade
+
+- name: Set the success variable to true based on the status
+  set_fact:
+    upgrade_success: false
+  when: not item.value | bool
+  with_dict: "{{ status_json }}"
+  tags:
+    - post-upgrade
+
+
+- name: Pause the execution if the upgrade was unsuccessful
+  pause:
+    seconds: 7200
+  when: not upgrade_success | bool
+  tags:
+    - post-upgrade
+
+
+
