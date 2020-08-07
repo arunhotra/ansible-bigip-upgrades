@@ -1,4 +1,4 @@
-# BIG-IP VCMP Upgrades (ansible)
+# BIG-IP Upgrades (ansible)
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@
 
 ## Usage
 
-  * Populate the inventory file with the VCMP hosts, both A and B. An example is provided in the invnetory file
+  * Populate the inventory file with the hosts, both A and B. An example is provided in the invnetory file
   * From the parent directory , run the command ansible-playbook playbooks/upgrade.yml
   * Verbosity levels can be used (-v,-vv,-vvv)
   * Each role uses a tag (except init which runs always), the tags feature can be leveraged if you only want to run a certain role for testing. For example, ansible-playbook playbooks/upgrade.yml --tags "pre-upgrade" -vvv
@@ -22,8 +22,7 @@
 
 ### Playbook - upgrade.yml
 
-  * Roles run first and then after the success criteria is true. The first time it assigns one of the vcmp hosts as standby and the other time it will assign the other vcmp host as standby.
-
+  * Roles run first and then after the success criteria is true. Following are the roles.
 
 ### Roles 
 
