@@ -15,17 +15,22 @@
       private: yes
 
   roles:
+
+# Upgrade standby devices  
     - init
     - pre-upgrade
     - upgrade
     - post-upgrade
 
+# After the upgrade is successful, failover and upgrade the previously active (now standby device)
 
     - { role: "init", when: (upgrade_success == true | bool) } 
     - { role: "pre-upgrade", when: (upgrade_success == true | bool) } 
     - { role: "upgrade", when: (upgrade_success == true | bool) } 
     - { role: "post-upgrade", when: (upgrade_success == true | bool) } 
 
-    
+# To sync the changes pending message after the upgrade 
+
+    - { role: "init", when: (upgrade_success == true | bool) } 
     - { role: "sync", when: (upgrade_success == true | bool) } 
 

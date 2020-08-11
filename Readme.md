@@ -3,7 +3,9 @@
 ## Prerequisites
 
   * Ansible 2.9
-  * Latest ansible collection installed - https://galaxy.ansible.com/f5networks/f5_modules
+  * Latest ansible collection installed - https://galaxy.ansible.com/f5networks/f5_modules. Use the command "ansible-galaxy collection install f5networks.f5_modules -p ./collections" so that the collections can be installed locally. The ansible config file currently points to the collections which are local.
+  * f5-sdk - pip3 install f5-sdk
+  * objectpath module (for sync) - pip3 install objectpath
   * Inventory populated
   * Ansible controller with access to internal BIG-IP and reachable to F5 license server
   * Ensure that there is an UPGRADES directory inside the parent folder (same level as inventory, playbooks and roles)
@@ -36,8 +38,9 @@
 
 ### Playbook - upgrade.yml
 
-  * Roles run first and then after the success criteria is true. Following are the roles.
+  * Roles run first and then after the success criteria is true.
   * The upgrade_success variable indicates that that particular upgrade (box A or B) was successful based on the comparison criteria (pool status comparison in this case)
+  * Description of roles below
 
 ### Roles 
 
@@ -70,3 +73,7 @@
 
   * It gets pool status output from active and standby and writes them to a file, then a python script compares the two files and writes a file called compare_status.json. If any of the guests fail to show successful comparison, then the upgrade success value is set to false.
 
+
+### sync
+
+  * Post upgrade sync - sync's from active to standby by using the bigip_configsync_action module. This is to get rid of the "changes pending" message after the upgrade.

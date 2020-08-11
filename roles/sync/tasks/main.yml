@@ -1,4 +1,4 @@
 - import_tasks: sync.yml
   when: not standby_host|bool and upgrade_success|bool
   tags:
-    - always
+    - sync
