@@ -1,6 +1,12 @@
 ---
 
 
+  - name: pause for allowance of the monitor timeout
+    pause:
+      seconds: 60
+    tags:
+      - post-upgrade       
+
   - include_tasks: collect-pool-status-standby.yml
     when:
       standby_host|bool == true

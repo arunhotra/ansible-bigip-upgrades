@@ -1,0 +1,11 @@
+- name: Sync configuration from active device to group
+  bigip_configsync_action:
+    device_group: ha
+    sync_device_to_group: yes
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+  delegate_to: localhost
+  tags:
+    - always

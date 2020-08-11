@@ -20,30 +20,51 @@
 
 ## Documentation
 
+### General upgrade process
+
+#### General guideline - work on standby first, compare with active. If things look good faiover and repeat process on active.
+
+  * Upload the image with the version that you will be upgrading to 
+  * Take backups ucs, qkview 
+  * Disable traps 
+  * Select inactive volume, delete it
+  * Install software into deleted volume and  activate 
+  * Once BIG-IP is booted into the new version, compare stats with the active device (log these stats as well)
+  * Note - currently the pool status is being compared - modify accordingly based on your needs
+  * If everthing looks good, failover and repeat the process on the other device
+
+
 ### Playbook - upgrade.yml
 
   * Roles run first and then after the success criteria is true. Following are the roles.
+  * The upgrade_success variable indicates that that particular upgrade (box A or B) was successful based on the comparison criteria (pool status comparison in this case)
 
 ### Roles 
 
 ### init-hosts - initializing and populating some variables to be used later 
 
-  * Initializes variables, initializes success variable seperately, populates hosts from the inventory, populates the guests from the hosts, populates the active standby guest pairs. It also assigns the standby host - in the first iteration based on the second host in the list. Then it also checks if the success criteria is working or not, and based on that it assigns the first host as standby host.
-
+  * Initializes variables, initializes success variable seperately, populates hosts from the inventory, populates the active standby pairs. 
+  
   * Note that all the tasks in the init-hosts always run
+  
+  * The standby_host variable controls
 
 ### pre-upgrade
 
   * Uploads image, takes qkview, ucs and re-licences
+  
+  * Pauses for 60 seconds after the volume is deleted
 
 ### upgrade  - 
 
-  * prepare the volume
+  * prepare the volume - delete the nearest inacvive volume
+  
+  * If there is only one volume - it chooses "HD1.10" as a safe bet and installs the software on that volume
 
-  * upgrade the guest
+  * upgrade the guest - install software on the chosen volume and boot into that volume
 
 
-### post upgrade guests
+### post upgrade 
 
   * compares the pool status and sets the upgrade_success variable accordingly.
 

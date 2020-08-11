@@ -1,0 +1,18 @@
+- name: Switchboot and Reboot "{{ inventory_hostname }}" to Volume "{{ volume }}"
+  uri:
+    url: "https://{{ inventory_hostname }}/mgmt/tm/sys"
+    user: "{{ username }}"
+    password: "{{ password }}"
+    method: POST
+    body: "{'command':'reboot','volume': '{{ volume }}' }"
+    body_format: json
+    validate_certs: no
+  delegate_to: localhost
+  tags:
+    - upgrade 
+
+- name: pause for 60 seconds
+  pause:
+    seconds: 60
+  tags:
+    - upgrade       

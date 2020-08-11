@@ -22,8 +22,8 @@
   tags:
     - upgrade
 
-- name: pause for 120 seconds
+- name: pause for 60 seconds
   pause:
-    seconds: 120
+    seconds: 60
   tags:
     - always       

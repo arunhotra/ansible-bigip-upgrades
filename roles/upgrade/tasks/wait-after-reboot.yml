@@ -1,0 +1,27 @@
+- name: Wait for "{{ inventory_hostname }}" to be ready after reboot
+  bigip_wait:
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      timeout: 3600
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - upgrade
+
+- name: Wait for nodes to be Checked in the new volume of "{{ inventory_hostname }}" so that the validation can begin
+  bigip_command:
+    commands: tmsh run /util bash -c 'bigtop -once -vips 0'
+    wait_for: result[0] not contains 'CHECKING'
+    interval: 60
+    retries: 30
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      timeout: 30
+      validate_certs: no
+  delegate_to: localhost
+  tags:
+    - upgrade

@@ -26,4 +26,6 @@
     - { role: "upgrade", when: (upgrade_success == true | bool) } 
     - { role: "post-upgrade", when: (upgrade_success == true | bool) } 
 
+    
+    - { role: "sync", when: (upgrade_success == true | bool) } 
 

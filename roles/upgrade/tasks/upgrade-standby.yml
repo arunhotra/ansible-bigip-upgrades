@@ -1,21 +1,21 @@
 - name: Parse the volume to get rid of the slash character
   set_fact:
-    volume: "HD1.10"
+    volume: "HD1.11"
   when: volumes | length == 0 
   tags:
     - upgrade
 
 
-- name: Install software 
+- name: Install software on "{{ inventory_hostname }}"
   bigip_software_install:
     image: "{{ ISO_IMAGE }}"
     volume: "{{ volume }}"
-    state: activated
+    state: installed
     provider:
       server: "{{ inventory_hostname }}"
       user: "{{ username }}"
       password: "{{ password }}"
-      server_port: 443
+      timeout: 7200
       validate_certs: no
   delegate_to: localhost
   tags:

@@ -1,20 +1,10 @@
 - name: Initializing the custom variables used in branching  
   vars:
   set_fact:
-    # proceed: False
-    # active: False
-    # standby: False
-    fistt_device: none
-    second_device: none
     volume: none
-    # datasync_global_dg: False
     ltm: none
     all_hosts: []
     bigips_standby_status: {}
-   # vcmp_guests: []
-   # vcmp_guests_names: []
-   # hosts: []
-   # vcmp_guests_standby_status: {}
     active_standby_ha_pairs: {}
     standby_host: False
   tags:
