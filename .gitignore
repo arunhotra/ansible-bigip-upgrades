@@ -5,3 +5,4 @@ UPGRADES/ISO
 collections
 
 *.patch
+*.log

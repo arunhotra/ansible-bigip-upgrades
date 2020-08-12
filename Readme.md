@@ -1,5 +1,14 @@
 # BIG-IP Upgrades (ansible)
 
+## Docker
+
+  * git clone git@github.com:arunhotra/ansible-bigip-upgrades.git
+  * modify inventory file according to your needs
+  * docker-compose run upgrade-bigip
+  * [from shell] ansible-playbook playbooks/upgrade_bigip.yml -vvv
+
+
+## Non Docker 
 ## Prerequisites
 
   * Ansible 2.9
@@ -15,9 +24,9 @@
 ## Usage
 
   * Populate the inventory file with the hosts, both A and B. An example is provided in the invnetory file
-  * From the parent directory , run the command ansible-playbook playbooks/upgrade.yml
+  * From the parent directory , run the command ansible-playbook playbooks/upgrade_bigip.yml
   * Verbosity levels can be used (-v,-vv,-vvv)
-  * Each role uses a tag (except init which runs always), the tags feature can be leveraged if you only want to run a certain role for testing. For example, ansible-playbook playbooks/upgrade.yml --tags "pre-upgrade" -vvv
+  * Each role uses a tag (except init which runs always), the tags feature can be leveraged if you only want to run a certain role for testing. For example, ansible-playbook playbooks/upgrade_bigip.yml --tags "pre-upgrade" -vvv
 
 
 ## Documentation
