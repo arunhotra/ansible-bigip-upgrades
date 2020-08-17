@@ -1,12 +1,35 @@
+
+- name: pause for 60 seconds
+  pause:
+    seconds: 60
+  tags:
+    - sync
+
+
 - name: Sync configuration from active device to group
   bigip_configsync_action:
-    device_group: ha
+    device_group: "{{ sync_group }}"
+    overwrite_config: yes
     sync_device_to_group: yes
     provider:
       server: "{{ inventory_hostname }}"
       user: "{{ username }}"
       password: "{{ password }}"
       validate_certs: no
+      server_port: 443
   delegate_to: localhost
   tags:
     - sync
+
+# - name: Sync the configuration using tmsh command
+#   bigip_command:
+#     commands: run cm config-sync to-group ha
+#     provider:
+#       server: "{{ inventory_hostname }}"
+#       user: "{{ username }}"
+#       password: "{{ password }}"
+#       timeout: 30
+#       validate_certs: no
+#   delegate_to: localhost
+#   tags:
+#     - sync

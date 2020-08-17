@@ -1,0 +1,21 @@
+- name: Upgrade a BIG-IP
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: username
+      prompt: "What is your username?"
+      private: no
+
+    - name: password
+      prompt: "What is your password?"
+      private: yes
+
+    - name: sync_group
+      prompt: "What is the name of your sync group?"
+      private: no
+
+  roles:
+
+    - sync

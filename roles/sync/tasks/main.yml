@@ -1,4 +1,17 @@
+- import_tasks: initialize-sync-variables.yml
+  tags:
+    - sync
+
+- import_tasks: populate-hosts.yml
+  tags:
+    - sync
+
+- import_tasks: assign-standby.yml
+  tags:
+    - sync
+
+
 - import_tasks: sync.yml
-  when: not standby_host|bool and upgrade_success|bool
+  when: not standby_host|bool
   tags:
     - sync

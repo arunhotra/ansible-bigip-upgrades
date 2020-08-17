@@ -1,0 +1,10 @@
+- name: Initializing the variables
+  vars:
+  set_fact:
+    all_hosts: []
+    bigips_standby_status: {}
+    standby_host: False
+  tags:
+    - sync
+
+

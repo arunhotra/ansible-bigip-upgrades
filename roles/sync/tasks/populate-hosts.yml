@@ -1,0 +1,14 @@
+- name: Create a List of BIG-IPs to be Upgraded
+  vars:
+  set_fact:
+    all_hosts: "{{ all_hosts|default([]) + [ item ] }}"
+  with_inventory_hostnames:
+    - all_hosts
+  tags:
+    - always
+
+- name: List the BIG-IPs to be Upgraded
+  debug:
+    msg: "{{ all_hosts }}"
+  tags:
+    - always

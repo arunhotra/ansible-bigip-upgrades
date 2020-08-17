@@ -1,0 +1,46 @@
+- name: Collect BIG-IP facts to determine HA pairs
+  bigip_device_info:
+    gather_subset:
+      - devices
+    provider:
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  register: bigip
+  delegate_to: localhost
+  tags:
+    - always
+
+
+- name: Find the failover status of BIG-IPs
+  set_fact:
+    bigips_standby_status: "{{ bigips_standby_status|default({}) | combine({device.hostname:device.failover_state}) }}"
+  when: device.hostname in all_hosts
+  loop: "{{ bigip.devices }}"
+  loop_control:
+    loop_var: device
+  tags:
+    - always
+
+- name: Debug the failover status
+  debug:
+    msg: "{{ bigips_standby_status }}"
+  tags:
+    - always
+
+
+
+- name: Assign the standby BIG-IP
+  set_fact:
+    standby_host : True
+  when: bigips_standby_status[inventory_hostname] == 'standby'
+  tags:
+    - always
+
+
+- name: List the standby_host fact
+  debug:
+    msg: "{{ standby_host }}"
+  tags:
+    - always
