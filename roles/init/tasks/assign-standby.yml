@@ -13,7 +13,7 @@
     - always
 
 
-- name: Find the failover status of BIG-IPs
+- name: Assign the failover status of BIG-IPs
   set_fact:
     bigips_standby_status: "{{ bigips_standby_status|default({}) | combine({device.hostname:device.failover_state}) }}"
   when: device.hostname in all_hosts
