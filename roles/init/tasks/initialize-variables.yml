@@ -10,20 +10,20 @@
   tags:
     - always
 
-- name: Make Directory for all UPGRADES related files
-  shell:  test -d "{{ UPGRADES }}" || mkdir "{{ UPGRADES }}" 
-  tags:
-    - always
+# - name: Make Directory for all UPGRADES related files
+#   shell:  test -d "{{ UPGRADES }}" || mkdir "{{ UPGRADES }}" 
+#   tags:
+#     - always
 
 
 
-- name: Make Directory on local system to store .ucs and .qkview files
-  shell:  test -d "{{ BACKUPS }}" || mkdir "{{ BACKUPS }}" 
-  tags:
-    - always
+# - name: Make Directory on local system to store .ucs and .qkview files
+#   shell:  test -d "{{ BACKUPS }}" || mkdir "{{ BACKUPS }}" 
+#   tags:
+#     - always
 
-- name: Make Directory on local system to store temporary files
-  shell:  test -d "{{ TMP }}" || mkdir "{{ TMP }}" 
-  tags:
-    - always
+# - name: Make Directory on local system to store temporary files
+#   shell:  test -d "{{ TMP }}" || mkdir "{{ TMP }}" 
+#   tags:
+#     - always
 
