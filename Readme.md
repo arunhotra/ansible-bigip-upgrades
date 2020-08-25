@@ -26,6 +26,8 @@
   * Ensure that there is an UPGRADES directory inside the parent folder (same level as inventory, playbooks and roles)
   * Inside the Upgrades directory, there is a SCRIPTS directory with compare.py 
   * Create another direcory called ISO inside of UPGRADES and add the target BIG-IP image inside the ISO directory
+  * Your directory will look like this
+  * ![Tree structure](images/tree-structure.png)
 
 ## Usage
 
