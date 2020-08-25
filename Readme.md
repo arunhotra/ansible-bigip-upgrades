@@ -1,5 +1,12 @@
 # BIG-IP Upgrades (ansible)
 
+
+```
+This branch uses the tmsh command for validation and is significantly faster.
+```
+
+[Test Results for this branch](./test_results.md)
+
 ## Docker
 
   * git clone git@github.com:arunhotra/ansible-bigip-upgrades.git
