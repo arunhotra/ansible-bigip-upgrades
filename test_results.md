@@ -1,5 +1,5 @@
 
-**3 pools, LTM only, v 13 - v 13**
+**3 pools, LTM only, v 13 - v 13, no pre upgrade tasks**
 
 ```
 
