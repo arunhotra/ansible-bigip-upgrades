@@ -1,6 +1,7 @@
 UPGRADES/BACKUPS/*.qkview
 UPGRADES/BACKUPS/*.ucs
 UPGRADES/TMP/*.json
+UPGRADES/TMP/*.txt
 UPGRADES/ISO/*.iso
 
 collections

@@ -1,5 +1,11 @@
 # BIG-IP Upgrades (ansible)
 
+## BRANCHES
+
+  * master - uses the bigip_device_info for validation. Currently slower than command-validation branch. Bug open - # 1827
+  * command-validation - uses a tmsh command for validation - significantly faster
+
+
 ## Docker
 
   * git clone git@github.com:arunhotra/ansible-bigip-upgrades.git
