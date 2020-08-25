@@ -1,0 +1,75 @@
+# - name: Initializing the custom variables used in branching  
+#   vars:
+#   set_fact:
+#     pool_statuses: {}
+#   tags:
+#     - post-upgrade
+
+
+
+# - name: COLLECT BIG-IP ltm Pools for "{{ inventory_hostname }}" using the FACTS module
+#   bigip_device_info:
+#     provider:
+#       server: "{{ inventory_hostname }}"
+#       user: "{{ username }}"
+#       password: "{{ password }}"
+#       validate_certs: no
+#     gather_subset:
+#       - ltm-pools
+#   register: pools
+#   tags:
+#     - post-upgrade
+
+# - name: Extracting the status of the pools
+#   set_fact:
+#     pool_statuses: "{{ pool_statuses|default({}) | combine({item.name:item.availability_status})}}"
+#   loop: "{{ pools.ltm_pools }}"
+#   tags:
+#     - post-upgrade
+
+
+# - name: Copy output to file
+#   copy:
+#     content: "{{ pool_statuses }}"
+#     dest: "{{ TMP }}/{{ inventory_hostname }}.json"
+#   tags:
+#     - post-upgrade
+
+
+
+
+  ##############
+
+- name: Getting the status of pools from {{ inventory_hostname }}
+  bigip_command:
+    commands: tmsh show ltm pool recursive field-fmt members 
+    provider: 
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  register: tmshPoolStatus
+  tags:
+    - post-upgrade
+
+- name: List the status
+  debug:
+    msg: "{{ tmshPoolStatus }}"
+  tags:
+    - post-upgrade
+
+- name: Copy output to file
+  copy:
+    content: "{{ tmshPoolStatus.stdout }}"
+    dest: "{{ TMP }}/{{ inventory_hostname }}.json"
+  delegate_to: localhost
+  tags:
+    - post-upgrade
+
+- name: Run the python script to parse the status of the pools
+  shell: python3 formatTmsh.py "{{ inventory_hostname }}"
+  args:
+    chdir: "{{ SCRIPTS }}"    
+  tags:
+    - post-upgrade

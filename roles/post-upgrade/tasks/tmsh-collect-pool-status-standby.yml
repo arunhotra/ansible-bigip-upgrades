@@ -1,0 +1,33 @@
+- name: Getting the status of pools from {{ inventory_hostname }}
+  bigip_command:
+    commands: tmsh show ltm pool recursive field-fmt members 
+    provider: 
+      server: "{{ inventory_hostname }}"
+      user: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no
+  delegate_to: localhost
+  register: tmshPoolStatus
+  tags:
+    - post-upgrade
+
+- name: List the status
+  debug:
+    msg: "{{ tmshPoolStatus }}"
+  tags:
+    - post-upgrade
+
+- name: Copy output to file
+  copy:
+    content: "{{ tmshPoolStatus.stdout }}"
+    dest: "{{ TMP }}/{{ inventory_hostname }}.json"
+  delegate_to: localhost
+  tags:
+    - post-upgrade
+
+- name: Run the python script to parse the status of the pools
+  shell: python3 formatTmsh.py "{{ inventory_hostname }}"
+  args:
+    chdir: "{{ SCRIPTS }}"    
+  tags:
+    - post-upgrade
