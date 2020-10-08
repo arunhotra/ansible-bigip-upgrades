@@ -2,14 +2,14 @@
 
 
 ```
-This branch uses the tmsh command for validation and is significantly faster.
+This branch uses the tmsh command for validation and is significantly faster. {recommended branch for usage currently}
 ```
 
 [Test Results for this branch](./test_results.md)
 
 ## Docker
 
-  * git clone git@github.com:arunhotra/ansible-bigip-upgrades.git
+  * git clone git@gitswarm.f5net.com:consulting/automation/bigip-ansible-upgrades.git
   * modify inventory file according to your needs
   * docker-compose run upgrade-bigip
   * [from shell] ansible-playbook playbooks/upgrade_bigip.yml -vvv
