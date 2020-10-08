@@ -2,14 +2,14 @@
 
 
 [all_hosts]
-B4200-R46-S39.sea.pslab.local
-B4200-R46-S40.sea.pslab.local
+ltm-2.example.com
+gantiip.pslab.com
 
 
 
 [all:vars]
 ITSM=CODABCDEF
-ISO_IMAGE=13.1.3.4.iso
+ISO_IMAGE=15.1.0.4.iso
 ISO_PATH= ../UPGRADES/ISO
 BACKUPS= ../UPGRADES/BACKUPS
 SCRIPTS= ../UPGRADES/SCRIPTS

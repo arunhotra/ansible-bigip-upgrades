@@ -4,7 +4,9 @@
   hosts: all
   connection: local
   gather_facts: no
-
+  collections:
+    - f5networks.f5_modules
+    
   vars_prompt:
     - name: username
       prompt: "What is your username?"

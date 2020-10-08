@@ -1,8 +1,8 @@
 --- 
 
-  - import_tasks: f5-upload-image.yml
-    tags:
-      - pre-upgrade
+  # - import_tasks: f5-upload-image.yml
+  #   tags:
+  #     - pre-upgrade
 
   - import_tasks: f5-pre-upgrade-tasks.yml
     tags:
